@@ -87,3 +87,20 @@ assinatura **VAPID (RFC 8292)** é validada como faz o servidor de push do Googl
 ## Depois da aprovação
 As tabelas `poc_push_*`, a função `poc-push` e a página de teste podem ser apagadas: a Etapa 1 cria a estrutura definitiva.
 O Worker e o projeto Supabase serão reaproveitados.
+
+## Resultado (19/11/2026) — APROVADA
+| Teste | Resultado |
+|---|---|
+| Página → Edge Function (senha e chave VAPID) | ✅ "Conectado" |
+| Inscrição do celular (Chrome/Android, FCM) | ✅ registrada às 19:57 |
+| Teste A — envio imediato | ✅ recebido (FCM respondeu 201) |
+| Cron do Cloudflare → Edge Function | ✅ execuções `tick:cron` a cada 5 min desde 19:55 |
+| Teste B — agendado, app fechado e tela bloqueada | ✅ disparado pelo cron às 20:15 e recebido |
+
+Lições para a migração:
+- Projetos novos do Supabase não concedem privilégios automáticos a tabelas criadas por SQL: as migrações devem
+  incluir `grant` explícito para os papéis necessários (aqui, só `service_role`).
+- Um Cron Trigger novo levou cerca de 15 minutos para começar a executar.
+- O Chrome marcou o primeiro envio como "Possível spam" (domínio novo `workers.dev`); bastou tocar em
+  "Mostrar notificações". No sistema final: endereço próprio (pages.dev ou domínio), app instalado.
+- O navegador Brave vem com push desativado por padrão; orientar os usuários a usar o Chrome.
