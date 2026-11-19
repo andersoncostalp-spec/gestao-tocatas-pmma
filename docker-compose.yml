@@ -1,0 +1,14 @@
+services:
+  tocatas:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_PATH: /app/data/tocatas.db
+    ports:
+      - "3000:3000"
+    volumes:
+      - tocatas-dados:/app/data
+
+volumes:
+  tocatas-dados:
