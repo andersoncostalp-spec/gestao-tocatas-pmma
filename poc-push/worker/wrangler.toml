@@ -1,0 +1,8 @@
+# Opcional: só é usado se o Worker for publicado pela linha de comando (wrangler).
+# Pelo painel do Cloudflare basta colar index.js e configurar o cron.
+name = "tocatas-cron"
+main = "index.js"
+compatibility_date = "2026-11-01"
+
+[triggers]
+crons = ["*/5 * * * *"]

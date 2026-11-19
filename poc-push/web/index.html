@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teste de Notificações · Tocatas BM</title>
+  <meta name="theme-color" content="#0b2a5b">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header><img src="/icon.svg" alt="" width="36" height="36"><div><strong>Tocatas BM</strong><small>Etapa 0 · teste de notificações</small></div></header>
+  <main>
+    <section class="cartao">
+      <h2>1. Conexão com o Supabase</h2>
+      <label>Endereço da Edge Function
+        <input id="url" type="url" placeholder="https://xxxx.supabase.co/functions/v1/poc-push" autocomplete="off"></label>
+      <label>Senha do teste (POC_TOKEN)
+        <input id="token" type="password" autocomplete="off"></label>
+      <button id="salvar">Salvar e verificar</button>
+      <p id="st-conexao" class="st"></p>
+    </section>
+
+    <section class="cartao">
+      <h2>2. Ativar notificações neste aparelho</h2>
+      <p class="dica">No Android, instale antes: menu ⋮ do Chrome → <em>Instalar app</em>. Depois abra pelo ícone.</p>
+      <button id="ativar">Ativar notificações</button>
+      <p id="st-push" class="st"></p>
+    </section>
+
+    <section class="cartao">
+      <h2>3. Testes</h2>
+      <button id="enviar">Enviar agora (teste A)</button>
+      <p class="dica">Teste A: a notificação deve chegar em segundos, com o app aberto ou não.</p>
+      <div class="linha">
+        <button id="agendar">Agendar para daqui</button>
+        <select id="minutos"><option>10</option><option>15</option><option>30</option><option>60</option></select><span>min</span>
+      </div>
+      <p class="dica">Teste B: agende, <strong>feche o app</strong> (remova dos recentes) e bloqueie a tela. O cron do Cloudflare roda a cada 5 min,
+        então a notificação chega até 5 min depois do horário.</p>
+      <p id="st-teste" class="st"></p>
+    </section>
+
+    <section class="cartao">
+      <h2>4. Situação no servidor</h2>
+      <button id="status" class="sec">Atualizar</button>
+      <pre id="saida">—</pre>
+    </section>
+
+    <details class="cartao">
+      <summary>Configuração inicial: gerar chaves VAPID (uma única vez)</summary>
+      <p class="dica">Gera o par de chaves de notificação no próprio navegador. Copie a chave privada para o segredo
+        <code>VAPID_PRIVATE_JWK</code> do Supabase. Ela não é enviada para lugar nenhum por esta página.</p>
+      <button id="gerar" class="sec">Gerar chaves</button>
+      <textarea id="jwk" rows="5" readonly placeholder="A chave privada aparecerá aqui"></textarea>
+      <button id="copiar" class="sec" hidden>Copiar chave privada</button>
+    </details>
+  </main>
+</body>
+</html>
