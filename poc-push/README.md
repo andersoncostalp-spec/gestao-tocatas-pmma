@@ -38,12 +38,11 @@ Antes de começar, invente uma **senha do teste** (ex.: 20 letras e números ale
 6. **Edge Functions → Secrets**: crie `POC_TOKEN` (sua senha do teste) e `VAPID_SUBJECT` (ex.: `mailto:seu-email@...`).
    O `VAPID_PRIVATE_JWK` será criado no passo C.
 
-### B. Cloudflare Pages (página de teste)
-1. Crie a conta em cloudflare.com (plano Free).
-2. **Workers & Pages → Create → Pages → Connect to Git** → autorize o GitHub → repositório `gestao-tocatas-pmma`.
-3. Branch: `claude/pmma-events-management-d16lkm`. Framework preset: **None**. Build command: **(vazio)**.
-   Build output directory: **`poc-push/web`**. Clique em **Save and Deploy**.
-4. Anote o endereço gerado (`https://<nome>.pages.dev`).
+### B. Página de teste (Worker do Cloudflare)
+A página é servida por um Worker (`tocatas-teste`), gerado a partir de `web/` por `scripts/build-page-worker.js`
+e publicado pela API do Cloudflare. Endereço: `https://tocatas-teste.<subdominio>.workers.dev`.
+(O envio de arquivos do Cloudflare Pages exige um token temporário próprio, incompatível com a injeção de credenciais
+do ambiente usado; o Worker tem o mesmo HTTPS e é instalável como PWA. Pages volta a ser avaliado na Etapa 5.)
 
 ### C. Chaves de notificação (VAPID)
 1. Abra o endereço do Pages no computador → **Configuração inicial: gerar chaves VAPID → Gerar chaves → Copiar**.
