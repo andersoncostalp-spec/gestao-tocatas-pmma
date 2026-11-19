@@ -31,3 +31,8 @@ create table if not exists public.poc_push_log (
 alter table public.poc_push_inscricoes enable row level security;
 alter table public.poc_push_agendados enable row level security;
 alter table public.poc_push_log enable row level security;
+
+-- Projetos novos do Supabase não concedem acesso automático a tabelas criadas por SQL.
+-- Somente a chave de serviço (usada pela Edge Function) recebe acesso; o público continua sem acesso.
+grant select, insert, update, delete on public.poc_push_inscricoes, public.poc_push_agendados, public.poc_push_log to service_role;
+grant usage, select on all sequences in schema public to service_role;
